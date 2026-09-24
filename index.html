@@ -1132,8 +1132,10 @@ function salvarSumula(){
     statsA:Object.fromEntries(s.teamA.map(id=>[id,s.stats[id]])),
     statsB:Object.fromEntries(s.teamB.map(id=>[id,s.stats[id]]))
   });
-  save();
+  // A tela de pós-partida depende do estado local da rodada.
+  // Não deixe o onSnapshot redesenhar a tela de partida antes dela aparecer.
   mostrarProximaRodada(s);
+  save();
 }
 
 let proximaRodadaPendente=null;
