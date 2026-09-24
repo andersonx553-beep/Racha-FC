@@ -670,6 +670,11 @@ function mostrarApp(user) {
 function renderAtual(){
   const tela = document.querySelector('.screen.active')?.id?.replace('s-','');
   if(!tela) return;
+
+  // Enquanto a tela pós-partida estiver ativa, o onSnapshot do Firebase
+  // não pode reconstruir o setup e apagar a próxima rodada.
+  if(tela==='partida' && window.bloquearRenderPartida) return;
+
   const fn = {inicio:renderInicio, jogadores:renderPlayers, sorteio:renderPresenca, partida:renderPartidaSetup, ranking:renderRanking, mais:renderMais};
   if(fn[tela]) fn[tela]();
 }
@@ -1117,7 +1122,11 @@ function renderSumula(){
 }
 function sChange(id,f,d){ sumulaState.stats[id][f]=Math.max(0,sumulaState.stats[id][f]+d); renderSumula(); }
 function scoreChange(t,d){ if(t==='A') sumulaState.golsA=Math.max(0,sumulaState.golsA+d); else sumulaState.golsB=Math.max(0,sumulaState.golsB+d); renderSumula(); }
-function cancelarSumula(){ sumulaState=null; renderPartidaSetup(); }
+function cancelarSumula(){
+  sumulaState=null;
+  window.bloquearRenderPartida=false;
+  renderPartidaSetup();
+}
 
 function salvarSumula(){
   const s=sumulaState;
@@ -1140,6 +1149,9 @@ function salvarSumula(){
 
 let proximaRodadaPendente=null;
 function mostrarProximaRodada(s){
+  // Mantém a tela pós-partida protegida contra o onSnapshot do Firebase.
+  window.bloquearRenderPartida=true;
+
   const empate=s.golsA===s.golsB;
   let vencedorIds,perdedorIds,nomeVenc,nomePerd;
   if(s.golsA>=s.golsB){ vencedorIds=s.teamA;perdedorIds=s.teamB;nomeVenc=s.nomeA;nomePerd=s.nomeB; }
@@ -1193,6 +1205,8 @@ function mostrarProximaRodada(s){
 
 function iniciarProximaRodada(){
   if(!proximaRodadaPendente) return;
+  // Continua protegido: a próxima rodada também é uma tela de partida local.
+  window.bloquearRenderPartida=true;
   const {nomeA,nomeB,idsA,idsB}=proximaRodadaPendente;
   document.querySelectorAll('.screen').forEach(e=>e.classList.remove('active'));
   document.getElementById('s-partida').classList.add('active');
@@ -1202,7 +1216,13 @@ function iniciarProximaRodada(){
   renderTelaPrePartida(nomeA,nomeB,idsA,idsB);
   window.scrollTo(0,0);
 }
-function novoSorteioCompleto(){ sumulaState=null;ultimoSorteio=null;proximaRodadaPendente=null;cancelarSumula();nav('sorteio'); }
+function novoSorteioCompleto(){
+  sumulaState=null;
+  ultimoSorteio=null;
+  proximaRodadaPendente=null;
+  window.bloquearRenderPartida=false;
+  nav('sorteio');
+}
 
 function renderTelaPrePartida(nomeA,nomeB,idsA,idsB){
   const CORES=[{bg:'rgba(25,184,103,.13)',border:'#19B867',txt:'#25D979',dot:'#19B867'},{bg:'rgba(90,90,90,.15)',border:'#888',txt:'#ccc',dot:'#aaa'},{bg:'rgba(224,131,39,.13)',border:'#e08327',txt:'#e08327',dot:'#e08327'},{bg:'rgba(100,149,237,.13)',border:'#6495ed',txt:'#6495ed',dot:'#6495ed'}];
