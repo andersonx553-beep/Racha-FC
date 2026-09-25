@@ -35,6 +35,9 @@ jobs:
       - name: Create Android project
         run: npx cap add android
 
+      - name: Generate Android app icon
+        run: npx @capacitor/assets generate --android --iconBackgroundColor '#080808' --iconBackgroundColorDark '#080808' --splashBackgroundColor '#080808' --splashBackgroundColorDark '#080808'
+
       - name: Configure Google/Firebase plugin
         run: |
           python - <<'PY'
