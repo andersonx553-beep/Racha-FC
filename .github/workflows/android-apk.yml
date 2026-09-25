@@ -57,7 +57,48 @@ jobs:
             echo "Secret GOOGLE_SERVICES_JSON não configurado."
             exit 1
           fi
-          printf '%s' "$GOOGLE_SERVICES_JSON" > android/app/google-services.json
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+
+          raw = os.environ["GOOGLE_SERVICES_JSON"].strip()
+
+          # Aceita JSON puro e também colagens acidentais com code fence/texto ao redor.
+          if raw.startswith("```"):
+              lines = raw.splitlines()
+              if lines and lines[0].startswith("```"):
+                  lines = lines[1:]
+              if lines and lines[-1].strip().startswith("```"):
+                  lines = lines[:-1]
+              raw = "\n".join(lines).strip()
+
+          first, last = raw.find("{"), raw.rfind("}")
+          if first >= 0 and last > first:
+              raw = raw[first:last+1]
+
+          # Se o secret foi salvo como uma string JSON escapada, desembrulha uma vez.
+          try:
+              parsed = json.loads(raw)
+              if isinstance(parsed, str):
+                  parsed = json.loads(parsed)
+          except json.JSONDecodeError as e:
+              print(f"GOOGLE_SERVICES_JSON inválido: {e}")
+              raise SystemExit(1)
+
+          expected = "com.rachadograxinha.app"
+          clients = parsed.get("client", [])
+          packages = [
+              x.get("client_info", {}).get("android_client_info", {}).get("package_name")
+              for x in clients
+          ]
+          if expected not in packages:
+              print(f"Package esperado {expected} não encontrado no google-services.json.")
+              raise SystemExit(1)
+
+          out = Path("android/app/google-services.json")
+          out.write_text(json.dumps(parsed, ensure_ascii=False, indent=2) + "\n")
+          print("google-services.json validado e normalizado com sucesso.")
+          PY
 
       - name: Sync Capacitor
         run: npx cap sync android
