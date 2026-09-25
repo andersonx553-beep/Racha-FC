@@ -1080,7 +1080,7 @@ function renderPresenca(){
     DB.players.map(p=>`<div class="check-row">
       <div style="display:flex;align-items:center;gap:8px">${playerPhoto(p,32)}<div>
         <div style="font-size:13px;font-weight:600">${p.nome}</div>
-        <div style="font-size:11px;color:var(--txt2)">${p.pos} · OVR ${p.ovr}${p.pos==='GOL'?' · 🧤 FIXO — fora do sorteio':''}</div>
+        <div style="font-size:11px;color:var(--txt2)">${p.pos} · OVR ${p.ovr}${p.pos==='GOL'?' · 🧤 GOLEIRO FIXO':''}</div>
       </div></div>
       <input type="checkbox" ${p.presente?'checked':''} onchange="togglePresenca('${p.id}',this.checked)">
     </div>`).join('');
@@ -1097,12 +1097,12 @@ let ultimoSorteio=null;
 let ultimoGoleiros=[];
 function renderGoleirosFixos(){
   if(!ultimoGoleiros.length) return '';
-  return '<div class="goalkeeper-summary"><div class="goalkeeper-summary-title">🧤 GOLEIROS CONFIRMADOS · FIXOS (NÃO ENTRAM NO SORTEIO)</div>'+
-    ultimoGoleiros.map(p=>'<div class="goalkeeper-fixed-row"><div style="display:flex;align-items:center;gap:8px">'+playerPhoto(p,30)+'<div><b style="font-size:12px">'+p.nome+'</b><div style="font-size:10px;color:var(--txt2)">Presente no racha</div></div></div><span class="pill keeper-fixed-pill">FIXO</span></div>').join('')+
+  return '<div class="goalkeeper-summary"><div class="goalkeeper-summary-title">🧤 GOLEIROS DO CAMPO · FIXOS DURANTE A ROTAÇÃO</div>'+
+    ultimoGoleiros.map((p,i)=>'<div class="goalkeeper-fixed-row"><div style="display:flex;align-items:center;gap:8px">'+playerPhoto(p,30)+'<div><b style="font-size:12px">'+p.nome+'</b><div style="font-size:10px;color:var(--txt2)">'+(i===0?'Lado A · permanece no campo':i===1?'Lado B · permanece no campo':'Goleiro reserva')+'</div></div></div><span class="pill keeper-fixed-pill">'+(i<2?'FIXO':'RESERVA')+'</span></div>').join('')+
     '</div>';
 }
 function sortearTimes(){
-  const goleiros=DB.players.filter(p=>p.presente&&p.pos==='GOL');
+  const goleiros=shuffleArray(DB.players.filter(p=>p.presente&&p.pos==='GOL'));
   const presentes=DB.players.filter(p=>p.presente&&p.pos!=='GOL');
   ultimoGoleiros=goleiros;
   if(presentes.length<DB.numTimes){ alert(`Marque pelo menos ${DB.numTimes} jogadores de linha como presentes. Goleiros ficam fixos e não entram no sorteio.`); return; }
@@ -1127,6 +1127,10 @@ function sortearTimes(){
           <div style="display:flex;align-items:center;gap:8px">${playerPhoto(p,32)}<b style="font-size:13px">${p.nome}</b></div>
           <span class="pill pill-pos">${p.pos}</span>
         </div>`).join('')}
+        ${i<2&&ultimoGoleiros[i]?`<div class="time-member goalkeeper-in-team">
+          <div style="display:flex;align-items:center;gap:8px">${playerPhoto(ultimoGoleiros[i],32)}<b style="font-size:13px">${ultimoGoleiros[i].nome}</b></div>
+          <span class="pill keeper-fixed-pill">🧤 GOL FIXO</span>
+        </div>`:''}
       </div>`).join('')}
     ${renderGoleirosFixos()}
     <div class="row" style="margin-top:10px">
@@ -1143,13 +1147,15 @@ function usarSorteioNaPartida(){
   setTimeout(()=>{
     if(ultimoSorteio[0]) ultimoSorteio[0].forEach(p=>{ const s=document.getElementById('team-'+p.id); if(s) s.value='A'; });
     if(ultimoSorteio[1]) ultimoSorteio[1].forEach(p=>{ const s=document.getElementById('team-'+p.id); if(s) s.value='B'; });
+    if(ultimoGoleiros[0]){ const s=document.getElementById('team-'+ultimoGoleiros[0].id); if(s) s.value='A'; }
+    if(ultimoGoleiros[1]){ const s=document.getElementById('team-'+ultimoGoleiros[1].id); if(s) s.value='B'; }
   },300);
 }
 function compartilharSorteio(){
   if(!ultimoSorteio) return;
   let msg=`⚽ *${DB.config.nome}*\n🎲 Resultado do Sorteio:\n\n`;
   ultimoSorteio.forEach((t,i)=>{ msg+=`*${TIMES_CONFIG[i].n}:*\n`; t.forEach(p=>msg+=`  • ${p.nome} (${p.pos})\n`); msg+='\n'; });
-  if(ultimoGoleiros.length){ msg+='🧤 *Goleiros confirmados (fixos / fora do sorteio):*\n'; ultimoGoleiros.forEach(p=>msg+=`  • ${p.nome}\n`); msg+='\n'; }
+  if(ultimoGoleiros.length){ msg+='🧤 *Goleiros fixos de campo (não saem na rotação):*\n'; ultimoGoleiros.forEach(p=>msg+=`  • ${p.nome}\n`); msg+='\n'; }
   window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
 }
 
@@ -1159,7 +1165,7 @@ function renderPartidaSetup(){
   document.getElementById('sumula-active').style.display='none';
   const el=document.getElementById('select-players-list');
   if(!DB.players.length){ el.innerHTML='<div class="empty">Cadastre jogadores primeiro.</div>'; return; }
-  el.innerHTML='<div class="keeper-note">🧤 <b>Goleiros são fixos.</b> A presença deles confirma que haverá goleiro no racha e eles não participam do sorteio. Aqui você pode apenas vincular cada goleiro ao Time A ou Time B para a súmula.</div>'+DB.players.map(p=>`<div class="check-row" style="gap:8px">
+  el.innerHTML='<div class="keeper-note">🧤 <b>Goleiros são fixos no campo.</b> Eles são definidos para o Lado A e Lado B e permanecem ali mesmo quando o time de linha perde e sai. O sorteio troca apenas os jogadores de linha.</div>'+DB.players.map(p=>`<div class="check-row" style="gap:8px">
     <div style="display:flex;align-items:center;gap:8px;flex:1;min-width:0">${playerPhoto(p,32)}<b style="font-size:13px">${p.nome}</b> <span class="pill ${p.pos==='GOL'?'keeper-fixed-pill':'pill-pos'}">${p.pos==='GOL'?'🧤 GOL FIXO':p.pos}</span></div>
     <select id="team-${p.id}" style="width:100px;padding:6px 8px;font-size:12px">
       <option value="">Fora</option><option value="A">Time A</option><option value="B">Time B</option>
