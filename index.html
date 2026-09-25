@@ -200,10 +200,48 @@ input:focus,select:focus,textarea:focus{border-color:var(--verde)}
 .time-member:last-child{border-bottom:none}
 
 /* ── SÚMULA ── */
-.placar-box{display:flex;align-items:center;justify-content:center;gap:16px;margin:8px 0}
-.placar-time{text-align:center;flex:1}
-.placar-score{font-size:44px;font-weight:900;color:var(--verde-d)}
+.placar-box{display:grid;grid-template-columns:minmax(52px,1fr) minmax(176px,auto) minmax(52px,1fr);align-items:center;gap:8px;margin:8px 0}
+.placar-time{text-align:center;min-width:0;font-size:13px;line-height:1.15;overflow-wrap:anywhere}
+.placar-score{font-size:44px;font-weight:900;color:var(--verde-d);line-height:1}
 .placar-vs{font-size:16px;color:var(--txt2);font-weight:700}
+.placar-box>div:nth-child(2){min-width:0}
+.placar-box>div:nth-child(2)>div:first-child{justify-content:center!important;gap:6px!important}
+.placar-box .counter-row{gap:5px}
+.placar-box .counter-row button{width:32px;height:32px}
+.match-timer-row{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:9px}
+.match-timer{min-width:116px;padding:6px 13px 5px;background:var(--bg2);border:1.5px solid var(--verde-escuro);border-radius:14px;box-shadow:inset 0 0 0 1px rgba(37,217,121,.04)}
+.match-timer-value{font-size:24px;line-height:1;font-weight:900;letter-spacing:.7px;color:var(--txt);font-variant-numeric:tabular-nums}
+.match-timer-label{margin-top:3px;font-size:9px;line-height:1;color:var(--txt2);font-weight:700;letter-spacing:.6px}
+.timer-btn{width:40px;height:40px;flex:0 0 40px;border-radius:50%;border:1px solid var(--borda);background:var(--bg2);color:var(--txt);font-size:17px;font-weight:900;display:flex;align-items:center;justify-content:center;cursor:pointer;font-family:inherit;transition:transform .1s,border-color .15s,background .15s}
+.timer-btn:active{transform:scale(.93)}
+.timer-btn.timer-play{background:var(--verde-escuro);border-color:var(--verde);color:var(--verde-n)}
+.timer-btn.timer-play.running{background:var(--verde-d);color:#07150d;box-shadow:0 0 14px rgba(37,217,121,.2)}
+.keeper-note{background:rgba(37,217,121,.08);border:1px solid rgba(37,217,121,.24);border-radius:12px;padding:10px 12px;margin-bottom:8px;font-size:11px;line-height:1.45;color:var(--txt2)}
+.keeper-note b{color:var(--verde-n)}
+.keeper-fixed-pill{background:rgba(37,217,121,.11);color:var(--verde-n);border:1px solid rgba(37,217,121,.25)}
+.goalkeeper-summary{margin:10px 0 2px;padding:12px;border:1px solid rgba(37,217,121,.22);background:rgba(18,57,33,.32);border-radius:13px}
+.goalkeeper-summary-title{font-size:11px;font-weight:800;color:var(--verde-n);margin-bottom:7px}
+.goalkeeper-fixed-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.goalkeeper-fixed-row:last-child{border-bottom:none}
+@media(max-width:390px){
+  .placar-box{grid-template-columns:minmax(44px,1fr) minmax(164px,auto) minmax(44px,1fr);gap:5px}
+  .placar-time{font-size:11px}
+  .placar-score{font-size:38px}
+  .placar-box .counter-row button{width:29px;height:30px;font-size:16px}
+  .match-timer-row{gap:5px}
+  .match-timer{min-width:104px;padding-left:9px;padding-right:9px}
+  .match-timer-value{font-size:21px}
+  .timer-btn{width:36px;height:36px;flex-basis:36px}
+}
+@media(max-width:340px){
+  .card{padding-left:12px;padding-right:12px}
+  .placar-box{grid-template-columns:42px minmax(156px,1fr) 42px;gap:4px}
+  .placar-score{font-size:34px}
+  .placar-box .counter-row button{width:27px;height:28px}
+  .match-timer{min-width:96px}
+  .match-timer-value{font-size:20px}
+  .timer-btn{width:34px;height:34px;flex-basis:34px}
+}
 .counter-row{display:flex;align-items:center;gap:8px}
 .counter-row button{width:32px;height:32px;border-radius:8px;background:var(--verde-escuro);color:var(--verde-n);border:none;font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .counter-row b{font-size:18px;min-width:20px;text-align:center}
@@ -809,7 +847,7 @@ function renderUltimaPartidaHTML(){
   <div class="card">
     <div class="placar-box">
       <div class="placar-time"><div style="font-weight:700">${m.nomeA}</div><div style="font-size:11px;color:${m.golsA>m.golsB?'var(--verde-d)':'var(--txt2)'}">${m.golsA>m.golsB?'Vencedor':'Derrota'}</div></div>
-      <div style="text-align:center"><span class="placar-score">${m.golsA}</span><span class="placar-vs"> × </span><span class="placar-score">${m.golsB}</span><div style="font-size:10px;color:var(--txt2)">TEMPO REGULAR</div></div>
+      <div style="text-align:center"><span class="placar-score">${m.golsA}</span><span class="placar-vs"> × </span><span class="placar-score">${m.golsB}</span><div style="font-size:10px;color:var(--txt2)">${m.tempoFormatado?'⏱ '+m.tempoFormatado:'TEMPO REGULAR'}</div></div>
       <div class="placar-time"><div style="font-weight:700">${m.nomeB}</div><div style="font-size:11px;color:${m.golsB>m.golsA?'var(--verde-d)':'var(--txt2)'}">${m.golsB>m.golsA?'Vencedor':'Derrota'}</div></div>
     </div>
     ${m.mvp?`<div style="text-align:center;margin-top:8px;font-size:12px;color:var(--verde-d)">⭐ MVP: <b>${m.mvp}</b></div>`:''}
@@ -979,11 +1017,13 @@ function renderPresenca(){
   const el=document.getElementById('presenca-list');
   if(!DB.players.length){ el.innerHTML=`<div class="empty">Cadastre jogadores primeiro.</div>`; return; }
   const presentes=DB.players.filter(p=>p.presente).length;
-  el.innerHTML=`<div style="font-size:12px;color:var(--txt2);margin-bottom:8px">${presentes} de ${DB.players.length} confirmados</div>`+
+  const linha=DB.players.filter(p=>p.presente&&p.pos!=='GOL').length;
+  const goleiros=DB.players.filter(p=>p.presente&&p.pos==='GOL').length;
+  el.innerHTML=`<div style="font-size:12px;color:var(--txt2);margin-bottom:8px">${presentes} confirmados · ${linha} de linha · ${goleiros} goleiro${goleiros===1?'':'s'} fixo${goleiros===1?'':'s'}</div>`+
     DB.players.map(p=>`<div class="check-row">
       <div style="display:flex;align-items:center;gap:8px">${playerPhoto(p,32)}<div>
         <div style="font-size:13px;font-weight:600">${p.nome}</div>
-        <div style="font-size:11px;color:var(--txt2)">${p.pos} · OVR ${p.ovr}</div>
+        <div style="font-size:11px;color:var(--txt2)">${p.pos} · OVR ${p.ovr}${p.pos==='GOL'?' · 🧤 FIXO — fora do sorteio':''}</div>
       </div></div>
       <input type="checkbox" ${p.presente?'checked':''} onchange="togglePresenca('${p.id}',this.checked)">
     </div>`).join('');
@@ -997,9 +1037,18 @@ const TIMES_CONFIG=[
   {n:'Time Laranja',c:'#e08327',colete:'Colete Laranja'},
 ];
 let ultimoSorteio=null;
+let ultimoGoleiros=[];
+function renderGoleirosFixos(){
+  if(!ultimoGoleiros.length) return '';
+  return '<div class="goalkeeper-summary"><div class="goalkeeper-summary-title">🧤 GOLEIROS CONFIRMADOS · FIXOS (NÃO ENTRAM NO SORTEIO)</div>'+
+    ultimoGoleiros.map(p=>'<div class="goalkeeper-fixed-row"><div style="display:flex;align-items:center;gap:8px">'+playerPhoto(p,30)+'<div><b style="font-size:12px">'+p.nome+'</b><div style="font-size:10px;color:var(--txt2)">Presente no racha</div></div></div><span class="pill keeper-fixed-pill">FIXO</span></div>').join('')+
+    '</div>';
+}
 function sortearTimes(){
-  const presentes=DB.players.filter(p=>p.presente);
-  if(presentes.length<DB.numTimes){ alert(`Marque pelo menos ${DB.numTimes} jogadores como presentes.`); return; }
+  const goleiros=DB.players.filter(p=>p.presente&&p.pos==='GOL');
+  const presentes=DB.players.filter(p=>p.presente&&p.pos!=='GOL');
+  ultimoGoleiros=goleiros;
+  if(presentes.length<DB.numTimes){ alert(`Marque pelo menos ${DB.numTimes} jogadores de linha como presentes. Goleiros ficam fixos e não entram no sorteio.`); return; }
   const emb=shuffleArray(presentes);
   const times=Array.from({length:DB.numTimes},()=>[]);
   emb.forEach((p,i)=>times[i%DB.numTimes].push(p));
@@ -1022,6 +1071,7 @@ function sortearTimes(){
           <span class="pill pill-pos">${p.pos}</span>
         </div>`).join('')}
       </div>`).join('')}
+    ${renderGoleirosFixos()}
     <div class="row" style="margin-top:10px">
       <button class="btn btn-secondary" onclick="sortearTimes()">↻ Sortear Novamente</button>
       <button class="btn btn-ghost" onclick="usarSorteioNaPartida()">⚽ Iniciar Partida</button>
@@ -1042,6 +1092,7 @@ function compartilharSorteio(){
   if(!ultimoSorteio) return;
   let msg=`⚽ *${DB.config.nome}*\n🎲 Resultado do Sorteio:\n\n`;
   ultimoSorteio.forEach((t,i)=>{ msg+=`*${TIMES_CONFIG[i].n}:*\n`; t.forEach(p=>msg+=`  • ${p.nome} (${p.pos})\n`); msg+='\n'; });
+  if(ultimoGoleiros.length){ msg+='🧤 *Goleiros confirmados (fixos / fora do sorteio):*\n'; ultimoGoleiros.forEach(p=>msg+=`  • ${p.nome}\n`); msg+='\n'; }
   window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
 }
 
@@ -1051,14 +1102,71 @@ function renderPartidaSetup(){
   document.getElementById('sumula-active').style.display='none';
   const el=document.getElementById('select-players-list');
   if(!DB.players.length){ el.innerHTML='<div class="empty">Cadastre jogadores primeiro.</div>'; return; }
-  el.innerHTML=DB.players.map(p=>`<div class="check-row" style="gap:8px">
-    <div style="display:flex;align-items:center;gap:8px;flex:1">${playerPhoto(p,32)}<b style="font-size:13px">${p.nome}</b> <span class="pill pill-pos">${p.pos}</span></div>
+  el.innerHTML='<div class="keeper-note">🧤 <b>Goleiros são fixos.</b> A presença deles confirma que haverá goleiro no racha e eles não participam do sorteio. Aqui você pode apenas vincular cada goleiro ao Time A ou Time B para a súmula.</div>'+DB.players.map(p=>`<div class="check-row" style="gap:8px">
+    <div style="display:flex;align-items:center;gap:8px;flex:1;min-width:0">${playerPhoto(p,32)}<b style="font-size:13px">${p.nome}</b> <span class="pill ${p.pos==='GOL'?'keeper-fixed-pill':'pill-pos'}">${p.pos==='GOL'?'🧤 GOL FIXO':p.pos}</span></div>
     <select id="team-${p.id}" style="width:100px;padding:6px 8px;font-size:12px">
       <option value="">Fora</option><option value="A">Time A</option><option value="B">Time B</option>
     </select></div>`).join('');
 }
 
 let sumulaState=null;
+let cronometroInterval=null;
+function tempoAtualMs(s=sumulaState){
+  if(!s) return 0;
+  const base=s.timerBaseMs||0;
+  return s.timerRunning&&s.timerStartedAt?base+(Date.now()-s.timerStartedAt):base;
+}
+function formatarTempo(ms){
+  const total=Math.max(0,Math.floor((ms||0)/1000));
+  const min=Math.floor(total/60);
+  const seg=total%60;
+  return String(min).padStart(2,'0')+':'+String(seg).padStart(2,'0');
+}
+function atualizarCronometroDOM(){
+  const display=document.getElementById('match-timer-display');
+  if(!display||!sumulaState) return;
+  display.textContent=formatarTempo(tempoAtualMs());
+  const btn=document.getElementById('match-timer-toggle');
+  if(btn){
+    btn.textContent=sumulaState.timerRunning?'Ⅱ':'▶';
+    btn.classList.toggle('running',!!sumulaState.timerRunning);
+    btn.setAttribute('aria-label',sumulaState.timerRunning?'Pausar cronômetro':'Iniciar cronômetro');
+    btn.title=sumulaState.timerRunning?'Pausar':'Iniciar';
+  }
+}
+function iniciarTimerLoop(){
+  if(cronometroInterval) return;
+  cronometroInterval=setInterval(atualizarCronometroDOM,250);
+}
+function toggleCronometro(){
+  if(!sumulaState) return;
+  if(sumulaState.timerRunning){
+    sumulaState.timerBaseMs=tempoAtualMs();
+    sumulaState.timerStartedAt=null;
+    sumulaState.timerRunning=false;
+  }else{
+    sumulaState.timerStartedAt=Date.now();
+    sumulaState.timerRunning=true;
+  }
+  iniciarTimerLoop();
+  atualizarCronometroDOM();
+}
+function resetCronometro(){
+  if(!sumulaState) return;
+  sumulaState.timerBaseMs=0;
+  sumulaState.timerStartedAt=sumulaState.timerRunning?Date.now():null;
+  atualizarCronometroDOM();
+}
+function congelarCronometro(){
+  const ms=tempoAtualMs();
+  if(sumulaState){
+    sumulaState.timerBaseMs=ms;
+    sumulaState.timerStartedAt=null;
+    sumulaState.timerRunning=false;
+  }
+  atualizarCronometroDOM();
+  return ms;
+}
 function iniciarSumula(){
   const nA=document.getElementById('pa-nomeA').value||'Time A';
   const nB=document.getElementById('pa-nomeB').value||'Time B';
@@ -1067,13 +1175,15 @@ function iniciarSumula(){
   if(!tA.length||!tB.length){ alert('Selecione jogadores para ambos os times.'); return; }
   const stats={};
   [...tA,...tB].forEach(id=>stats[id]={gols:0,assist:0});
-  sumulaState={nomeA:nA,nomeB:nB,teamA:tA,teamB:tB,golsA:0,golsB:0,stats,mvp:'',obs:''};
+  sumulaState={nomeA:nA,nomeB:nB,teamA:tA,teamB:tB,golsA:0,golsB:0,stats,mvp:'',obs:'',timerBaseMs:0,timerStartedAt:null,timerRunning:false};
   document.getElementById('setup-partida').style.display='none';
   document.getElementById('sumula-active').style.display='block';
   renderSumula();
 }
 function renderSumula(){
   const s=sumulaState;
+  iniciarTimerLoop();
+  setTimeout(atualizarCronometroDOM,0);
   const jog=id=>DB.players.find(p=>p.id===id);
   const teamBlock=(ids,nomeTime)=>`
     <div style="margin:14px 0 8px;font-size:14px;font-weight:800">🟢 ${nomeTime} <span style="color:var(--verde-d)">${ids.reduce((t,id)=>t+s.stats[id].gols,0)} Gols</span></div>
@@ -1103,7 +1213,14 @@ function renderSumula(){
             <span class="placar-vs">×</span>
             <div class="counter-row"><button onclick="scoreChange('B',-1)">-</button><span class="placar-score">${s.golsB}</span><button onclick="scoreChange('B',1)">+</button></div>
           </div>
-          <div style="font-size:10px;color:var(--txt2);margin-top:4px">TEMPO REGULAR</div>
+          <div class="match-timer-row">
+            <button class="timer-btn" onclick="resetCronometro()" aria-label="Zerar cronômetro" title="Zerar">↻</button>
+            <div class="match-timer">
+              <div id="match-timer-display" class="match-timer-value">00:00</div>
+              <div class="match-timer-label">1º TEMPO</div>
+            </div>
+            <button id="match-timer-toggle" class="timer-btn timer-play" onclick="toggleCronometro()" aria-label="Iniciar cronômetro" title="Iniciar">▶</button>
+          </div>
         </div>
         <div class="placar-time"><b>${s.nomeB}</b></div>
       </div>
@@ -1130,6 +1247,7 @@ function cancelarSumula(){
 
 function salvarSumula(){
   const s=sumulaState;
+  const duracaoMs=congelarCronometro();
   const mvpNome=s.mvp?DB.players.find(p=>p.id===s.mvp)?.apelido||DB.players.find(p=>p.id===s.mvp)?.nome:'';
   Object.keys(s.stats).forEach(id=>{
     const p=DB.players.find(x=>x.id===id); if(!p) return;
@@ -1138,6 +1256,7 @@ function salvarSumula(){
   DB.matches.unshift({
     id:'m'+Date.now(),data:new Date().toLocaleDateString('pt-BR'),
     nomeA:s.nomeA,nomeB:s.nomeB,golsA:s.golsA,golsB:s.golsB,mvp:mvpNome,obs:s.obs,
+    tempoMs:duracaoMs,tempoFormatado:formatarTempo(duracaoMs),
     statsA:Object.fromEntries(s.teamA.map(id=>[id,s.stats[id]])),
     statsB:Object.fromEntries(s.teamB.map(id=>[id,s.stats[id]]))
   });
@@ -1219,6 +1338,7 @@ function iniciarProximaRodada(){
 function novoSorteioCompleto(){
   sumulaState=null;
   ultimoSorteio=null;
+  ultimoGoleiros=[];
   proximaRodadaPendente=null;
   window.bloquearRenderPartida=false;
   nav('sorteio');
@@ -1260,7 +1380,7 @@ function renderTelaPrePartida(nomeA,nomeB,idsA,idsB){
     <button class="btn btn-ghost" id="btn-back-inicio">🏠 Voltar ao Início</button>`;
   document.getElementById('btn-apitar').addEventListener('click',()=>{
     const stats={};[...idsA,...idsB].forEach(id=>stats[id]={gols:0,assist:0});
-    sumulaState={nomeA,nomeB,teamA:idsA,teamB:idsB,golsA:0,golsB:0,stats,mvp:'',obs:''};
+    sumulaState={nomeA,nomeB,teamA:idsA,teamB:idsB,golsA:0,golsB:0,stats,mvp:'',obs:'',timerBaseMs:0,timerStartedAt:null,timerRunning:false};
     renderSumula();
   });
   document.getElementById('btn-back-sorteio').addEventListener('click',()=>{cancelarSumula();nav('sorteio');});
@@ -1316,7 +1436,7 @@ function renderMais(){
   el.innerHTML=DB.matches.map((m,i)=>`
     <div class="card" style="margin-bottom:10px">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-        <span style="font-size:11px;color:var(--txt2)">Rodada ${DB.matches.length-i} · ${m.data}</span>
+        <span style="font-size:11px;color:var(--txt2)">Rodada ${DB.matches.length-i} · ${m.data}${m.tempoFormatado?' · ⏱ '+m.tempoFormatado:''}</span>
         <span class="pill" style="background:${m.golsA>m.golsB?'var(--verde-escuro)':m.golsA<m.golsB?'#2a1010':'#1a1a1a'};color:${m.golsA===m.golsB?'var(--txt2)':'var(--verde-d)'}">
           ${m.golsA>m.golsB?'Vitória '+m.nomeA:m.golsA<m.golsB?'Vitória '+m.nomeB:'Empate'}
         </span>
