@@ -1,0 +1,8 @@
+{
+  "appId": "com.rachadograxinha.app",
+  "appName": "Racha do Graxinha",
+  "webDir": "web",
+  "server": {
+    "androidScheme": "https"
+  }
+}
