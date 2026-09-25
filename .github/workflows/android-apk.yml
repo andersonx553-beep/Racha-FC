@@ -76,11 +76,15 @@ jobs:
           if first >= 0 and last > first:
               raw = raw[first:last+1]
 
-          # Se o secret foi salvo como uma string JSON escapada, desembrulha uma vez.
+          # Lê o primeiro objeto JSON válido e ignora texto/duplicações acidentais depois dele.
           try:
-              parsed = json.loads(raw)
+              decoder = json.JSONDecoder()
+              parsed, end = decoder.raw_decode(raw)
               if isinstance(parsed, str):
-                  parsed = json.loads(parsed)
+                  parsed, _ = decoder.raw_decode(parsed.strip())
+              trailing = raw[end:].strip()
+              if trailing:
+                  print("Aviso: conteúdo extra após o JSON foi ignorado.")
           except json.JSONDecodeError as e:
               print(f"GOOGLE_SERVICES_JSON inválido: {e}")
               raise SystemExit(1)
