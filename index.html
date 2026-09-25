@@ -6,7 +6,7 @@
 <title>Racha do Graxinha</title>
 <meta name="application-name" content="Racha do Graxinha">
 <meta name="description" content="Gerencie seu racha: sorteio de times, ranking, súmulas e estatísticas dos boleiros.">
-<meta name="theme-color" content="#090D0B">
+<meta name="theme-color" content="#080808">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -19,9 +19,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#090D0B;--bg2:#0D1410;--bg3:#111814;
-  --verde-escuro:#123921;--verde:#19B867;--verde-d:#25D979;--verde-n:#5DF09C;--verde-s:#D9F7E5;
-  --txt:#F0F7F2;--txt2:#91A198;--borda:#26362C;
+  --bg:#080808;--bg2:#101010;--bg3:#171717;
+  --verde-escuro:#3A0B12;--verde:#D7192D;--verde-d:#FF2D43;--verde-n:#F2F2F2;--verde-s:#FFFFFF;
+  --txt:#F0F7F2;--txt2:#A5A5A5;--borda:#373737;
   --bronze1:#8A5728;--bronze2:#D49A55;--bronze3:#B87938;
   --prata1:#71828C;--prata2:#F2FBFF;--prata3:#BFCED5;
   --ouro1:#9D6710;--ouro2:#D3941D;--ouro3:#F5CF55;--ouro4:#FFF0A1;
@@ -44,7 +44,7 @@ body{padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
   background:linear-gradient(135deg,var(--verde-escuro),var(--verde));
   display:flex;align-items:center;justify-content:center;
   font-size:38px;margin-bottom:24px;
-  box-shadow:0 0 40px rgba(25,184,103,.35)
+  box-shadow:0 0 40px rgba(215,25,45,.35)
 }
 .login-title{font-size:30px;font-weight:900;letter-spacing:-.5px;margin-bottom:6px}
 .login-sub{font-size:14px;color:var(--txt2);margin-bottom:40px;line-height:1.5}
@@ -85,7 +85,7 @@ body{padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
 .user-avatar-fallback{
   width:28px;height:28px;border-radius:50%;
   background:var(--verde);display:flex;align-items:center;justify-content:center;
-  font-size:12px;font-weight:800;color:#090D0B;flex-shrink:0
+  font-size:12px;font-weight:800;color:#080808;flex-shrink:0
 }
 .user-bar-name{flex:1;font-weight:700;font-size:13px;color:var(--verde-n)}
 .btn-sair{
@@ -124,7 +124,7 @@ body{padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
 /* ── BUTTONS ── */
 .btn{display:block;width:100%;padding:14px;border:none;border-radius:12px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;text-align:center;transition:transform .1s}
 .btn:active{transform:scale(.97)}
-.btn-primary{background:var(--verde-d);color:#090D0B}
+.btn-primary{background:var(--verde-d);color:#080808}
 .btn-secondary{background:transparent;border:1.5px solid var(--borda);color:var(--txt)}
 .btn-ghost{background:var(--verde-escuro);color:var(--verde-n)}
 .btn-danger{background:#2a0f15;color:#ff7a8a;border:1.5px solid #5a2030}
@@ -146,7 +146,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--verde)}
 .pill-pos{background:var(--verde-escuro);color:var(--verde-n)}
 .chip-group{display:flex;gap:6px;flex-wrap:wrap}
 .chip{background:var(--bg2);border:1.5px solid var(--borda);border-radius:20px;padding:7px 14px;font-size:12px;font-weight:600;cursor:pointer;color:var(--txt2)}
-.chip.active{background:var(--verde-d);color:#090D0B;border-color:var(--verde-d)}
+.chip.active{background:var(--verde-d);color:#080808;border-color:var(--verde-d)}
 
 /* ── STATS ROW ── */
 .stats-row{display:flex;gap:6px;margin:10px 0}
@@ -209,17 +209,17 @@ input:focus,select:focus,textarea:focus{border-color:var(--verde)}
 .placar-box .counter-row{gap:5px}
 .placar-box .counter-row button{width:32px;height:32px}
 .match-timer-row{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:9px}
-.match-timer{min-width:116px;padding:6px 13px 5px;background:var(--bg2);border:1.5px solid var(--verde-escuro);border-radius:14px;box-shadow:inset 0 0 0 1px rgba(37,217,121,.04)}
+.match-timer{min-width:116px;padding:6px 13px 5px;background:var(--bg2);border:1.5px solid var(--verde-escuro);border-radius:14px;box-shadow:inset 0 0 0 1px rgba(255,45,67,.04)}
 .match-timer-value{font-size:24px;line-height:1;font-weight:900;letter-spacing:.7px;color:var(--txt);font-variant-numeric:tabular-nums}
 .match-timer-label{margin-top:3px;font-size:9px;line-height:1;color:var(--txt2);font-weight:700;letter-spacing:.6px}
 .timer-btn{width:40px;height:40px;flex:0 0 40px;border-radius:50%;border:1px solid var(--borda);background:var(--bg2);color:var(--txt);font-size:17px;font-weight:900;display:flex;align-items:center;justify-content:center;cursor:pointer;font-family:inherit;transition:transform .1s,border-color .15s,background .15s}
 .timer-btn:active{transform:scale(.93)}
 .timer-btn.timer-play{background:var(--verde-escuro);border-color:var(--verde);color:var(--verde-n)}
-.timer-btn.timer-play.running{background:var(--verde-d);color:#07150d;box-shadow:0 0 14px rgba(37,217,121,.2)}
-.keeper-note{background:rgba(37,217,121,.08);border:1px solid rgba(37,217,121,.24);border-radius:12px;padding:10px 12px;margin-bottom:8px;font-size:11px;line-height:1.45;color:var(--txt2)}
+.timer-btn.timer-play.running{background:var(--verde-d);color:#07150d;box-shadow:0 0 14px rgba(255,45,67,.2)}
+.keeper-note{background:rgba(255,45,67,.08);border:1px solid rgba(255,45,67,.24);border-radius:12px;padding:10px 12px;margin-bottom:8px;font-size:11px;line-height:1.45;color:var(--txt2)}
 .keeper-note b{color:var(--verde-n)}
-.keeper-fixed-pill{background:rgba(37,217,121,.11);color:var(--verde-n);border:1px solid rgba(37,217,121,.25)}
-.goalkeeper-summary{margin:10px 0 2px;padding:12px;border:1px solid rgba(37,217,121,.22);background:rgba(18,57,33,.32);border-radius:13px}
+.keeper-fixed-pill{background:rgba(255,45,67,.11);color:var(--verde-n);border:1px solid rgba(255,45,67,.25)}
+.goalkeeper-summary{margin:10px 0 2px;padding:12px;border:1px solid rgba(255,45,67,.22);background:rgba(58,11,18,.32);border-radius:13px}
 .goalkeeper-summary-title{font-size:11px;font-weight:800;color:var(--verde-n);margin-bottom:7px}
 .goalkeeper-fixed-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)}
 .goalkeeper-fixed-row:last-child{border-bottom:none}
@@ -272,7 +272,7 @@ input[type=checkbox]{width:18px;height:18px;accent-color:var(--verde-d);cursor:p
 /* ── TABBAR ── */
 .tabbar{display:flex;background:var(--bg2);border-radius:12px;padding:4px;margin-bottom:14px}
 .tabbar button{flex:1;background:none;border:none;color:var(--txt2);padding:9px 4px;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit}
-.tabbar button.active{background:var(--verde-d);color:#090D0B}
+.tabbar button.active{background:var(--verde-d);color:#080808}
 
 /* ── EMPTY ── */
 .empty{text-align:center;padding:36px 20px;color:var(--txt2);font-size:13px}
@@ -289,7 +289,7 @@ input[type=checkbox]{width:18px;height:18px;accent-color:var(--verde-d);cursor:p
  --verde-escuro:#0b4026;--verde:#16b962;--verde-d:#22df78;--verde-n:#69f2aa;
 }
 [data-theme="light"]{--bg:#151816;--bg2:#1b1f1c;--bg3:#222723;--txt:#f7f8f7;--txt2:#bdc5c0;--borda:#465049}
-html,body{background:radial-gradient(circle at 82% 7%,rgba(255,35,56,.16),transparent 22%),radial-gradient(circle at 8% 38%,rgba(34,223,120,.08),transparent 23%),linear-gradient(180deg,#050706,#080b09 48%,#040504);color:var(--txt)}
+html,body{background:radial-gradient(circle at 82% 7%,rgba(255,35,56,.16),transparent 22%),radial-gradient(circle at 8% 38%,rgba(255,45,67,.08),transparent 23%),linear-gradient(180deg,#050706,#080b09 48%,#040504);color:var(--txt)}
 body{position:relative;isolation:isolate;overflow-x:hidden}
 body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;background:linear-gradient(125deg,transparent 0 13%,rgba(255,35,56,.12) 13.15% 13.5%,transparent 13.65% 43%,rgba(255,35,56,.06) 43.15% 43.5%,transparent 43.65%),repeating-linear-gradient(135deg,rgba(255,255,255,.012) 0 2px,transparent 2px 11px)}
 body::after{content:"";position:fixed;right:-78px;top:70px;width:300px;height:300px;z-index:-1;pointer-events:none;background:var(--graxinha-logo) center/contain no-repeat;opacity:.055}
@@ -304,15 +304,15 @@ body::after{content:"";position:fixed;right:-78px;top:70px;width:300px;height:30
 .topbar-right{align-items:center;gap:8px}
 .logo-badge{width:82px;height:64px;border-radius:0;background:var(--graxinha-logo) center/contain no-repeat!important;font-size:0;color:transparent;filter:drop-shadow(0 7px 8px rgba(0,0,0,.55));flex-shrink:0}
 .icon-btn{background:linear-gradient(145deg,#171c19,#080b09);border:1px solid #4a534e;box-shadow:inset 0 1px rgba(255,255,255,.05),0 8px 18px rgba(0,0,0,.3)}
-.user-bar{background:linear-gradient(100deg,rgba(10,62,36,.78),rgba(8,14,10,.94));border:1px solid rgba(34,223,120,.55);border-radius:15px;padding:10px 12px;box-shadow:inset 0 0 18px rgba(34,223,120,.035),0 10px 24px rgba(0,0,0,.25)}
+.user-bar{background:linear-gradient(100deg,rgba(10,62,36,.78),rgba(8,14,10,.94));border:1px solid rgba(255,45,67,.55);border-radius:15px;padding:10px 12px;box-shadow:inset 0 0 18px rgba(255,45,67,.035),0 10px 24px rgba(0,0,0,.25)}
 .card{position:relative;overflow:hidden;background:linear-gradient(145deg,rgba(17,21,18,.97),rgba(7,10,8,.97));border:1px solid #343c37;border-radius:17px;box-shadow:inset 0 1px rgba(255,255,255,.025),0 12px 28px rgba(0,0,0,.27)}
 .card::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.38;background:linear-gradient(128deg,transparent 0 72%,rgba(255,35,56,.05) 72.3% 72.8%,transparent 73%)}
-.card.green{background:linear-gradient(115deg,rgba(8,62,34,.78),rgba(7,13,9,.93) 63%),radial-gradient(circle at 88% 40%,rgba(255,35,56,.13),transparent 35%);border-color:rgba(34,223,120,.62);box-shadow:0 14px 30px rgba(0,0,0,.31)}
+.card.green{background:linear-gradient(115deg,rgba(8,62,34,.78),rgba(7,13,9,.93) 63%),radial-gradient(circle at 88% 40%,rgba(255,35,56,.13),transparent 35%);border-color:rgba(255,45,67,.62);box-shadow:0 14px 30px rgba(0,0,0,.31)}
 .sec-title{color:#cbd1cd;font-size:12px;font-weight:900;letter-spacing:1px;border-left:4px solid var(--brand-red);padding-left:9px;text-shadow:0 2px 8px rgba(0,0,0,.35)}
 .stat{background:linear-gradient(180deg,#101512,#080b09);border:1px solid #202823;border-radius:13px;box-shadow:0 8px 17px rgba(0,0,0,.2)}.stat b{color:var(--verde-d)}
 .btn{box-shadow:0 8px 18px rgba(0,0,0,.21),inset 0 1px rgba(255,255,255,.07)}
 .btn-primary{color:#fff;background:linear-gradient(180deg,#ff3448,#be1126 54%,#820918);border:1px solid rgba(255,105,117,.42)}
-.btn-ghost{color:#dfffee;background:linear-gradient(180deg,#126238,#0a3e24);border:1px solid rgba(34,223,120,.28)}
+.btn-ghost{color:#dfffee;background:linear-gradient(180deg,#126238,#0a3e24);border:1px solid rgba(255,45,67,.28)}
 .btn-secondary{color:#e3e7e5;background:linear-gradient(180deg,#171c19,#0b0e0c);border:1px solid #49514d}
 .btn-danger{background:linear-gradient(180deg,#55131c,#2a090f);border-color:#842334;color:#ff8d98}
 input,select,textarea{background:linear-gradient(180deg,#0b100d,#070a08);border-color:#38413c;box-shadow:inset 0 1px 8px rgba(0,0,0,.25)}
@@ -336,6 +336,156 @@ input:focus,select:focus,textarea:focus{border-color:var(--brand-red);box-shadow
 .navbar button{color:#aab4ae}.navbar button.active{color:var(--brand-red);text-shadow:0 0 11px rgba(255,35,56,.22)}
 .modal{max-width:560px;background:linear-gradient(180deg,#121613,#080b09);border:1px solid #404943;box-shadow:0 -20px 45px rgba(0,0,0,.48)}
 @media(max-width:520px){.wrap{padding:14px 11px}.topbar h1{font-size:24px}.logo-badge{width:69px;height:54px}.topbar-right>.btn.btn-sm{font-size:11px;padding:8px 10px}.login-logo{width:158px;height:145px}}
+
+
+/* ══════════════════════════════════════════════════════════════
+   PALETA FINAL — RACHA DO GRAXINHA
+   Preto + vermelho + branco + aço. Zero verde visual.
+   ══════════════════════════════════════════════════════════════ */
+:root{
+  --verde-escuro:#3A0B12!important;
+  --verde:#D7192D!important;
+  --verde-d:#FF2D43!important;
+  --verde-n:#F2F2F2!important;
+  --verde-s:#FFFFFF!important;
+  --bg:#080808!important;--bg2:#101010!important;--bg3:#171717!important;
+  --txt:#F5F5F5!important;--txt2:#A5A5A5!important;--borda:#373737!important;
+  --metal-hi:#F6F7F7;--metal-mid:#AEB5B1;--metal-low:#5F6763;
+  --brand-red:#FF2D43;--brand-red-dark:#860C1A;
+}
+html,body{
+  background:
+    radial-gradient(circle at 82% 8%,rgba(255,45,67,.17),transparent 24%),
+    radial-gradient(circle at 10% 72%,rgba(255,255,255,.045),transparent 22%),
+    linear-gradient(180deg,#050505 0%,#0B0B0B 52%,#040404 100%)!important;
+}
+body::before{
+  background:
+    linear-gradient(124deg,transparent 0 12%,rgba(255,45,67,.14) 12.15% 12.55%,transparent 12.7% 42%,rgba(255,45,67,.075) 42.15% 42.5%,transparent 42.7%),
+    repeating-linear-gradient(135deg,rgba(255,255,255,.012) 0 2px,transparent 2px 11px)!important;
+}
+.user-bar{
+  background:linear-gradient(105deg,rgba(97,10,23,.74),rgba(10,10,10,.94))!important;
+  border-color:rgba(255,45,67,.55)!important;
+  box-shadow:inset 0 0 20px rgba(255,45,67,.035),0 10px 26px rgba(0,0,0,.3)!important;
+}
+.user-avatar,.user-avatar-fallback{border-color:#FF2D43!important;box-shadow:0 0 12px rgba(255,45,67,.18)!important}
+.sync-badge{color:#F2F2F2!important}.sync-dot{background:#FF2D43!important}
+.card.green{
+  background:
+    linear-gradient(112deg,rgba(82,8,18,.78),rgba(10,10,10,.95) 64%),
+    radial-gradient(circle at 88% 38%,rgba(255,255,255,.06),transparent 31%)!important;
+  border-color:rgba(255,45,67,.56)!important;
+}
+.stat b,.pc-stat b,.pc-ovr-box b{color:#FF2D43!important}
+.btn-primary,.chip.active,.filters .chip.active,.tabbar button.active{
+  background:linear-gradient(180deg,#FF4055 0%,#D7192D 52%,#850B19 100%)!important;
+  color:#FFF!important;border-color:rgba(255,116,129,.46)!important;
+}
+.btn-ghost{
+  background:linear-gradient(180deg,#242424,#111)!important;
+  color:#F5F5F5!important;border:1px solid #545454!important;
+}
+.btn-ghost:hover{border-color:#FF2D43!important}
+.btn-secondary{background:linear-gradient(180deg,#1D1D1D,#0A0A0A)!important;color:#EFEFEF!important;border-color:#4A4A4A!important}
+.pill-pos{background:#252525!important;color:#F3F3F3!important;border:1px solid #4C4C4C}
+.keeper-note,.goalkeeper-summary{background:linear-gradient(145deg,rgba(100,10,22,.22),rgba(8,8,8,.95))!important;border-color:rgba(255,45,67,.34)!important}
+.keeper-note b,.goalkeeper-summary-title,.keeper-fixed-pill{color:#FF8C99!important}
+.placar-box{
+  border-color:rgba(255,45,67,.34)!important;
+  background:radial-gradient(circle at 50% 0,rgba(255,45,67,.10),transparent 46%),linear-gradient(180deg,#141414,#080808)!important;
+}
+.placar-score{
+  color:#F4F4F4!important;
+  background:linear-gradient(180deg,#FFF,#BFC4C1 52%,#6F7773 82%,#EEE);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.match-timer{border-color:rgba(255,45,67,.42)!important;background:linear-gradient(180deg,#121212,#070707)!important}
+.match-timer-value{color:#FF5265!important;text-shadow:0 0 12px rgba(255,45,67,.28)!important}
+.timer-btn.timer-play{background:linear-gradient(180deg,#2A2A2A,#111)!important;border-color:#626262!important;color:#FFF!important}
+.timer-btn.timer-play.running{background:linear-gradient(180deg,#FF4055,#A70E20)!important;border-color:#FF7080!important;color:#FFF!important}
+.counter-row button:first-child{background:linear-gradient(180deg,#5F111D,#2E070D)!important;color:#FF9AA5!important;border-color:#812433!important}
+.counter-row button:last-child{background:linear-gradient(180deg,#D7192D,#7D0A18)!important;color:#FFF!important;border-color:#FF5265!important}
+.time-card{background:linear-gradient(145deg,#151515,#080808)!important}
+.goalkeeper-in-team{background:linear-gradient(90deg,rgba(255,45,67,.11),transparent)!important}
+.navbar button.active{color:#FF2D43!important;text-shadow:0 0 12px rgba(255,45,67,.28)!important}
+input[type=checkbox]{accent-color:#D7192D!important}
+.spinner{border-top-color:#FF2D43!important}
+
+/* Modo claro: aço branco + preto + vermelho, mantendo a mesma identidade. */
+[data-theme="light"]{
+  --bg:#E8E9E8!important;--bg2:#F5F5F4!important;--bg3:#FFFFFF!important;
+  --txt:#141414!important;--txt2:#606461!important;--borda:#C5C9C7!important;
+  --verde-escuro:#F5DDE1!important;--verde:#B81428!important;--verde-d:#D7192D!important;--verde-n:#8D0D1B!important;--verde-s:#3B0A10!important;
+}
+[data-theme="light"] body,
+[data-theme="light"] html{
+  background:
+    radial-gradient(circle at 84% 8%,rgba(215,25,45,.11),transparent 24%),
+    linear-gradient(180deg,#F7F7F6,#E3E5E3 58%,#D3D6D4)!important;
+}
+[data-theme="light"] body::before{
+  background:
+    linear-gradient(125deg,transparent 0 13%,rgba(215,25,45,.08) 13.15% 13.5%,transparent 13.7% 43%,rgba(90,90,90,.05) 43.15% 43.5%,transparent 43.7%),
+    repeating-linear-gradient(135deg,rgba(0,0,0,.018) 0 2px,transparent 2px 11px)!important;
+}
+[data-theme="light"] body::after{opacity:.035!important;filter:grayscale(.1) contrast(1.05)}
+[data-theme="light"] #login-screen{background:linear-gradient(180deg,#F5F5F4,#D7DAD8)!important}
+[data-theme="light"] .login-title,
+[data-theme="light"] .topbar h1{
+  background:linear-gradient(180deg,#111 0%,#333 48%,#777 78%,#1A1A1A 100%)!important;
+  -webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;
+  text-shadow:0 3px 10px rgba(255,255,255,.45)!important;
+}
+[data-theme="light"] .topbar-left .eyebrow{color:#2D2D2D!important}
+[data-theme="light"] .card,
+[data-theme="light"] .pc-inner,
+[data-theme="light"] .mplayer,
+[data-theme="light"] .time-card,
+[data-theme="light"] .pod{
+  background:linear-gradient(145deg,#FFFFFF,#EBEDEB)!important;
+  border-color:#C3C7C4!important;
+  box-shadow:0 10px 22px rgba(0,0,0,.10),inset 0 1px #FFF!important;
+}
+[data-theme="light"] .card.green{
+  background:linear-gradient(115deg,#FFF,#F3E7E9 68%)!important;
+  border-color:rgba(215,25,45,.45)!important;
+}
+[data-theme="light"] .user-bar{
+  background:linear-gradient(100deg,#FFF,#F0E2E5)!important;
+  border-color:rgba(215,25,45,.42)!important;color:#171717!important;
+}
+[data-theme="light"] .user-bar-name{color:#171717!important}
+[data-theme="light"] .sync-badge{color:#8F0E1C!important}
+[data-theme="light"] .stat{background:linear-gradient(180deg,#FFF,#E7E9E7)!important;border-color:#CDD0CE!important}
+[data-theme="light"] input,
+[data-theme="light"] select,
+[data-theme="light"] textarea{background:#FFF!important;color:#151515!important;border-color:#BFC4C1!important}
+[data-theme="light"] .chip{background:linear-gradient(180deg,#FFF,#E5E7E5)!important;color:#343434!important;border-color:#BEC3C0!important}
+[data-theme="light"] .chip.active,
+[data-theme="light"] .filters .chip.active,
+[data-theme="light"] .tabbar button.active{color:#FFF!important}
+[data-theme="light"] .btn-secondary,
+[data-theme="light"] .btn-ghost{background:linear-gradient(180deg,#333,#111)!important;color:#FFF!important;border-color:#555!important}
+[data-theme="light"] .placar-box{
+  background:radial-gradient(circle at 50% 0,rgba(215,25,45,.08),transparent 47%),linear-gradient(180deg,#FFF,#E9EBE9)!important;
+  border-color:rgba(215,25,45,.3)!important;
+}
+[data-theme="light"] .placar-score{
+  background:linear-gradient(180deg,#171717,#4B4B4B 50%,#8C918E 76%,#222)!important;
+  -webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;
+}
+[data-theme="light"] .match-timer{background:#FFF!important}
+[data-theme="light"] .mplayer::before{background:linear-gradient(90deg,#D7192D,transparent 65%)!important}
+[data-theme="light"] .navbar{background:rgba(248,248,247,.97)!important;border-top-color:#C9CDCA!important;box-shadow:0 -9px 24px rgba(0,0,0,.12)!important}
+[data-theme="light"] .navbar button{color:#555!important}
+[data-theme="light"] .navbar button.active{color:#D7192D!important}
+[data-theme="light"] .modal{background:linear-gradient(180deg,#FFF,#E6E8E6)!important;border-color:#BEC3C0!important;color:#141414!important}
+[data-theme="light"] .modal-bg{background:rgba(15,15,15,.5)!important}
+[data-theme="light"] .keeper-note,
+[data-theme="light"] .goalkeeper-summary{background:linear-gradient(145deg,#FFF,#F2E1E4)!important}
+[data-theme="light"] .time-member,
+[data-theme="light"] .check-row{border-bottom-color:#D3D6D4!important}
 
 </style>
 </head>
@@ -480,7 +630,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--brand-red);box-shadow
     <p style="font-size:13px;color:var(--txt2);margin-bottom:14px">Anote gols e assistências para atualizar o ranking automaticamente.</p>
     <div class="card">
       <div class="row">
-        <div><label>Nome do Time A</label><input id="pa-nomeA" value="Time Verde"></div>
+        <div><label>Nome do Time A</label><input id="pa-nomeA" value="Time Vermelho"></div>
         <div><label>Nome do Time B</label><input id="pa-nomeB" value="Time Preto"></div>
       </div>
     </div>
@@ -800,7 +950,7 @@ function pts(p,tab='geral'){
 }
 function playerPhoto(p,size=54){
   if(p.foto) return `<img src="${p.foto}" style="width:${size}px;height:${size}px;border-radius:${size*.18}px;object-fit:cover">`;
-  const colors=['#19B867','#1a6e40','#145c35','#0a4a27'];
+  const colors=['#D7192D','#1a6e40','#145c35','#0a4a27'];
   const c=colors[p.nome.charCodeAt(0)%colors.length];
   return `<div style="width:${size}px;height:${size}px;border-radius:${size*.18}px;background:${c};display:flex;align-items:center;justify-content:center;font-size:${size*.35}px;font-weight:900;flex-shrink:0">${(p.apelido||p.nome)[0].toUpperCase()}</div>`;
 }
@@ -1088,10 +1238,10 @@ function renderPresenca(){
 function togglePresenca(id,v){ const p=DB.players.find(x=>x.id===id); if(p){ p.presente=v; save(); renderPresenca(); } }
 
 const TIMES_CONFIG=[
-  {n:'Time Verde',c:'#19B867',colete:'Colete Verde'},
-  {n:'Time Preto',c:'#444444',colete:'Colete Preto'},
-  {n:'Time Branco',c:'#c0c0c0',colete:'Colete Branco'},
-  {n:'Time Laranja',c:'#e08327',colete:'Colete Laranja'},
+  {n:'Time Vermelho',c:'#FF2D43',colete:'Colete Vermelho'},
+  {n:'Time Preto',c:'#181818',colete:'Colete Preto'},
+  {n:'Time Branco',c:'#F2F2F2',colete:'Colete Branco'},
+  {n:'Time Prata',c:'#8D9591',colete:'Colete Prata'},
 ];
 let ultimoSorteio=null;
 let ultimoGoleiros=[];
@@ -1417,7 +1567,7 @@ function novoSorteioCompleto(){
 }
 
 function renderTelaPrePartida(nomeA,nomeB,idsA,idsB,goleiroA='',goleiroB=''){
-  const CORES=[{bg:'rgba(25,184,103,.13)',border:'#19B867',txt:'#25D979',dot:'#19B867'},{bg:'rgba(90,90,90,.15)',border:'#888',txt:'#ccc',dot:'#aaa'},{bg:'rgba(224,131,39,.13)',border:'#e08327',txt:'#e08327',dot:'#e08327'},{bg:'rgba(100,149,237,.13)',border:'#6495ed',txt:'#6495ed',dot:'#6495ed'}];
+  const CORES=[{bg:'rgba(255,45,67,.12)',border:'#FF2D43',txt:'#FF6B7C',dot:'#FF2D43'},{bg:'rgba(18,18,18,.72)',border:'#666',txt:'#E5E5E5',dot:'#292929'},{bg:'rgba(242,242,242,.08)',border:'#AEB5B1',txt:'#F2F2F2',dot:'#E8E8E8'},{bg:'rgba(141,149,145,.12)',border:'#8D9591',txt:'#D9DEDB',dot:'#AEB5B1'}];
   const idxA=TIMES_CONFIG.findIndex(t=>t.n===nomeA);
   const idxB=TIMES_CONFIG.findIndex(t=>t.n===nomeB);
   const cA=CORES[idxA>=0?idxA:0];const cB=CORES[idxB>=0?idxB:1];
@@ -1450,7 +1600,7 @@ function renderTelaPrePartida(nomeA,nomeB,idsA,idsB,goleiroA='',goleiroB=''){
     </div>
     <div style="display:flex;gap:8px;margin-bottom:14px">${blocoTime(jogsA,nomeA,cA,golA)}${blocoTime(jogsB,nomeB,cB,golB)}</div>
     ${perigos}
-    <button class="btn btn-primary" style="font-size:16px;padding:17px;margin-bottom:10px" id="btn-apitar">🟢 APITAR — Iniciar Partida</button>
+    <button class="btn btn-primary" style="font-size:16px;padding:17px;margin-bottom:10px" id="btn-apitar">🔴 APITAR — Iniciar Partida</button>
     <button class="btn btn-secondary" style="margin-bottom:10px" id="btn-back-sorteio">🔀 Voltar ao Sorteio</button>
     <button class="btn btn-ghost" id="btn-back-inicio">🏠 Voltar ao Início</button>`;
   document.getElementById('btn-apitar').addEventListener('click',()=>{
@@ -1536,16 +1686,19 @@ function gerarIcone(size){
   const c=document.createElement('canvas');c.width=size;c.height=size;
   const ctx=c.getContext('2d');
   const g=ctx.createLinearGradient(0,0,size,size);
-  g.addColorStop(0,'#090D0B');g.addColorStop(1,'#123921');
+  g.addColorStop(0,'#050505');g.addColorStop(.58,'#171717');g.addColorStop(1,'#4A0B15');
   ctx.fillStyle=g;
   const r=size*0.22;
   ctx.beginPath();ctx.moveTo(r,0);ctx.lineTo(size-r,0);ctx.quadraticCurveTo(size,0,size,r);
   ctx.lineTo(size,size-r);ctx.quadraticCurveTo(size,size,size-r,size);
   ctx.lineTo(r,size);ctx.quadraticCurveTo(0,size,0,size-r);
   ctx.lineTo(0,r);ctx.quadraticCurveTo(0,0,r,0);ctx.closePath();ctx.fill();
-  ctx.fillStyle='#19B867';ctx.beginPath();ctx.arc(size/2,size/2,size*0.32,0,Math.PI*2);ctx.fill();
+  const rg=ctx.createRadialGradient(size*.42,size*.36,size*.04,size/2,size/2,size*.34);
+  rg.addColorStop(0,'#ff6b7c');rg.addColorStop(.44,'#d7192d');rg.addColorStop(1,'#650813');
+  ctx.fillStyle=rg;ctx.beginPath();ctx.arc(size/2,size/2,size*0.32,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle='#d9dddb';ctx.lineWidth=Math.max(2,size*.018);ctx.stroke();
   ctx.fillStyle='#fff';ctx.font=`bold ${size*0.36}px serif`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('⚽',size/2,size/2+size*0.02);
-  ctx.fillStyle='#25D979';ctx.font=`bold ${size*0.13}px Inter,sans-serif`;ctx.fillText('RFC',size/2,size*0.82);
+  ctx.fillStyle='#f2f2f2';ctx.font=`bold ${size*0.13}px Inter,sans-serif`;ctx.fillText('RFC',size/2,size*0.82);
   return c.toDataURL('image/png');
 }
 (function setupPWA(){
@@ -1554,7 +1707,7 @@ function gerarIcone(size){
   document.getElementById('apple-icon-152').href=icon152;
   document.getElementById('apple-icon-120').href=icon120;
   document.getElementById('favicon-32').href=icon32;
-  const manifest={name:'Racha do Graxinha',short_name:'Graxinha',description:'Gerencie seu racha: sorteio, ranking, súmulas e estatísticas.',start_url:'.',display:'standalone',orientation:'portrait',background_color:'#090D0B',theme_color:'#090D0B',lang:'pt-BR',icons:[{src:icon192,sizes:'192x192',type:'image/png',purpose:'any maskable'},{src:icon512,sizes:'512x512',type:'image/png',purpose:'any maskable'}]};
+  const manifest={name:'Racha do Graxinha',short_name:'Graxinha',description:'Gerencie seu racha: sorteio, ranking, súmulas e estatísticas.',start_url:'.',display:'standalone',orientation:'portrait',background_color:'#080808',theme_color:'#080808',lang:'pt-BR',icons:[{src:icon192,sizes:'192x192',type:'image/png',purpose:'any maskable'},{src:icon512,sizes:'512x512',type:'image/png',purpose:'any maskable'}]};
   const blob=new Blob([JSON.stringify(manifest)],{type:'application/manifest+json'});
   document.getElementById('pwa-manifest').href=URL.createObjectURL(blob);
 })();
@@ -1564,8 +1717,8 @@ window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPro
 function mostrarBannerInstall(){
   if(document.getElementById('install-banner')) return;
   const banner=document.createElement('div');banner.id='install-banner';
-  banner.style.cssText=`position:fixed;bottom:calc(76px + env(safe-area-inset-bottom,0px));left:12px;right:12px;background:#19B867;color:#090D0B;border-radius:16px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 24px rgba(25,184,103,.4);z-index:500;font-family:Inter,system-ui,sans-serif;animation:slideUp .3s ease`;
-  banner.innerHTML=`<style>@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}</style><div><div style="font-weight:800;font-size:14px">⚽ Instalar Racha do Graxinha</div><div style="font-size:12px;margin-top:2px;opacity:.8">Adicionar à tela inicial como app</div></div><div style="display:flex;gap:8px"><button onclick="instalarApp()" style="background:#090D0B;color:#25D979;border:none;border-radius:10px;padding:9px 16px;font-weight:700;font-size:13px;cursor:pointer">Instalar</button><button onclick="fecharBanner()" style="background:rgba(0,0,0,.2);color:#090D0B;border:none;border-radius:10px;padding:9px 12px;font-weight:700;font-size:13px;cursor:pointer">✕</button></div>`;
+  banner.style.cssText=`position:fixed;bottom:calc(76px + env(safe-area-inset-bottom,0px));left:12px;right:12px;background:#D7192D;color:#080808;border-radius:16px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 24px rgba(215,25,45,.4);z-index:500;font-family:Inter,system-ui,sans-serif;animation:slideUp .3s ease`;
+  banner.innerHTML=`<style>@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}</style><div><div style="font-weight:800;font-size:14px">⚽ Instalar Racha do Graxinha</div><div style="font-size:12px;margin-top:2px;opacity:.8">Adicionar à tela inicial como app</div></div><div style="display:flex;gap:8px"><button onclick="instalarApp()" style="background:#080808;color:#FF2D43;border:none;border-radius:10px;padding:9px 16px;font-weight:700;font-size:13px;cursor:pointer">Instalar</button><button onclick="fecharBanner()" style="background:rgba(0,0,0,.2);color:#080808;border:none;border-radius:10px;padding:9px 12px;font-weight:700;font-size:13px;cursor:pointer">✕</button></div>`;
   document.body.appendChild(banner);
 }
 async function instalarApp(){ if(!deferredPrompt) return; deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt=null; fecharBanner(); }
