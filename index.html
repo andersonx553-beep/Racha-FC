@@ -1233,12 +1233,16 @@ function congelarCronometro(){
 function iniciarSumula(){
   const nA=document.getElementById('pa-nomeA').value||'Time A';
   const nB=document.getElementById('pa-nomeB').value||'Time B';
-  const tA=[],tB=[];
-  DB.players.forEach(p=>{ const v=document.getElementById('team-'+p.id)?.value; if(v==='A') tA.push(p.id); if(v==='B') tB.push(p.id); });
-  if(!tA.length||!tB.length){ alert('Selecione jogadores para ambos os times.'); return; }
+  const selA=[],selB=[];
+  DB.players.forEach(p=>{ const v=document.getElementById('team-'+p.id)?.value; if(v==='A') selA.push(p.id); if(v==='B') selB.push(p.id); });
+  const goleiroA=selA.find(id=>DB.players.find(p=>p.id===id)?.pos==='GOL')||'';
+  const goleiroB=selB.find(id=>DB.players.find(p=>p.id===id)?.pos==='GOL')||'';
+  const tA=selA.filter(id=>DB.players.find(p=>p.id===id)?.pos!=='GOL');
+  const tB=selB.filter(id=>DB.players.find(p=>p.id===id)?.pos!=='GOL');
+  if(!tA.length||!tB.length){ alert('Selecione jogadores de linha para ambos os times.'); return; }
   const stats={};
-  [...tA,...tB].forEach(id=>stats[id]={gols:0,assist:0});
-  sumulaState={nomeA:nA,nomeB:nB,teamA:tA,teamB:tB,golsA:0,golsB:0,stats,mvp:'',obs:'',timerBaseMs:0,timerStartedAt:null,timerRunning:false};
+  [...tA,...tB,...(goleiroA?[goleiroA]:[]),...(goleiroB?[goleiroB]:[])].forEach(id=>stats[id]={gols:0,assist:0});
+  sumulaState={nomeA:nA,nomeB:nB,teamA:tA,teamB:tB,goleiroA,goleiroB,golsA:0,golsB:0,stats,mvp:'',obs:'',timerBaseMs:0,timerStartedAt:null,timerRunning:false};
   document.getElementById('setup-partida').style.display='none';
   document.getElementById('sumula-active').style.display='block';
   renderSumula();
@@ -1248,14 +1252,17 @@ function renderSumula(){
   iniciarTimerLoop();
   setTimeout(atualizarCronometroDOM,0);
   const jog=id=>DB.players.find(p=>p.id===id);
-  const teamBlock=(ids,nomeTime)=>`
-    <div style="margin:14px 0 8px;font-size:14px;font-weight:800">🟢 ${nomeTime} <span style="color:var(--verde-d)">${ids.reduce((t,id)=>t+s.stats[id].gols,0)} Gols</span></div>
-    ${ids.map(id=>{const p=jog(id);const st=s.stats[id]; return p?`
+  const teamBlock=(ids,nomeTime,goleiroId)=>{
+    const todos=[...ids,...(goleiroId?[goleiroId]:[])];
+    return `
+    <div style="margin:14px 0 8px;font-size:14px;font-weight:800">${goleiroId?'🧤':'⚽'} ${nomeTime} <span style="color:var(--verde-d)">${todos.reduce((t,id)=>t+(s.stats[id]?.gols||0),0)} Gols</span></div>
+    ${todos.map(id=>{const p=jog(id);const st=s.stats[id]; return p?`
       <div class="mplayer">
         <div class="mplayer-head">
-          <div><div class="mplayer-name">${p.nome}</div><div style="font-size:11px;color:var(--txt2)">"${p.apelido||p.nome}" · ${p.pos}</div></div>
+          <div><div class="mplayer-name">${p.nome}</div><div style="font-size:11px;color:var(--txt2)">"${p.apelido||p.nome}" · ${p.pos}${id===goleiroId?' · FIXO NO CAMPO':''}</div></div>
           <div class="mplayer-badges">
             <span class="pill ${tierPill[getPlayerTier(p.ovr)]}">${p.ovr}</span>
+            ${id===goleiroId?`<span class="pill keeper-fixed-pill">🧤 FIXO</span>`:''}
             ${s.mvp===id?`<span class="pill" style="background:#FFD700;color:#111">⭐ MVP</span>`:''}
           </div>
         </div>
@@ -1266,6 +1273,7 @@ function renderSumula(){
             <div class="counter-row"><button onclick="sChange('${id}','assist',-1)">-</button><b>${st.assist}</b><button onclick="sChange('${id}','assist',1)">+</button></div></div>
         </div>
       </div>`:'';}).join('')}`;
+  };
   document.getElementById('sumula-active').innerHTML=`
     <div class="card" style="margin-bottom:12px">
       <div class="placar-box">
@@ -1288,12 +1296,12 @@ function renderSumula(){
         <div class="placar-time"><b>${s.nomeB}</b></div>
       </div>
     </div>
-    ${teamBlock(s.teamA,s.nomeA)}
-    ${teamBlock(s.teamB,s.nomeB)}
+    ${teamBlock(s.teamA,s.nomeA,s.goleiroA)}
+    ${teamBlock(s.teamB,s.nomeB,s.goleiroB)}
     <div style="margin:16px 0 8px;font-weight:800">⭐ Craque da Partida (MVP)</div>
     <select id="sum-mvp" onchange="sumulaState.mvp=this.value;renderSumula()" style="margin-bottom:12px">
       <option value="">Selecionar MVP...</option>
-      ${[...s.teamA,...s.teamB].map(id=>{ const p=jog(id); return p?`<option value="${id}" ${s.mvp===id?'selected':''}>${p.nome}</option>`:''; }).join('')}
+      ${[...s.teamA,...s.teamB,...(s.goleiroA?[s.goleiroA]:[]),...(s.goleiroB?[s.goleiroB]:[])].map(id=>{ const p=jog(id); return p?`<option value="${id}" ${s.mvp===id?'selected':''}>${p.nome}${id===s.goleiroA||id===s.goleiroB?' · GOL':''}</option>`:''; }).join('')}
     </select>
     <div style="margin-bottom:6px;font-weight:800">📝 Observações</div>
     <textarea id="sum-obs" rows="2" placeholder="Ex: Jogo quente, gol no fim..." oninput="sumulaState.obs=this.value">${s.obs}</textarea>
@@ -1320,8 +1328,9 @@ function salvarSumula(){
     id:'m'+Date.now(),data:new Date().toLocaleDateString('pt-BR'),
     nomeA:s.nomeA,nomeB:s.nomeB,golsA:s.golsA,golsB:s.golsB,mvp:mvpNome,obs:s.obs,
     tempoMs:duracaoMs,tempoFormatado:formatarTempo(duracaoMs),
-    statsA:Object.fromEntries(s.teamA.map(id=>[id,s.stats[id]])),
-    statsB:Object.fromEntries(s.teamB.map(id=>[id,s.stats[id]]))
+    statsA:Object.fromEntries([...s.teamA,...(s.goleiroA?[s.goleiroA]:[])].map(id=>[id,s.stats[id]])),
+    statsB:Object.fromEntries([...s.teamB,...(s.goleiroB?[s.goleiroB]:[])].map(id=>[id,s.stats[id]])),
+    goleiroA:s.goleiroA||'',goleiroB:s.goleiroB||''
   });
   // A tela de pós-partida depende do estado local da rodada.
   // Não deixe o onSnapshot redesenhar a tela de partida antes dela aparecer.
