@@ -52,3 +52,13 @@ Depois disso, a autenticação Google deve ser ligada a um fluxo nativo do Capac
 ## Importante
 
 O arquivo fonte oficial continua sendo `index.html` na raiz. Não edite `web/index.html` diretamente; ele é regenerado por `npm run web:prepare`.
+
+
+## Login Google nativo
+
+O projeto usa `@capacitor-firebase/authentication` com Google no Android e `skipNativeAuth: true`.
+O login nativo entrega o ID token para o Firebase JavaScript SDK, preservando o Firestore e a sessão web já usada pelo aplicativo.
+
+O workflow espera um secret de repositório chamado `GOOGLE_SERVICES_JSON` contendo o conteúdo integral do arquivo oficial baixado no Firebase Console. Ele é gravado em `android/app/google-services.json` apenas durante o build e não fica publicado no repositório.
+
+Após o primeiro APK Debug, o workflow mostra SHA-1 e SHA-256 no resumo da execução e também salva `android/debug-signing.txt` no artifact. Cadastre essas impressões digitais no app Android do Firebase.

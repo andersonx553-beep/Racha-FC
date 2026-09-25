@@ -792,7 +792,7 @@ input[type=checkbox]{accent-color:#D7192D!important}
 <!-- ═══ FIREBASE SDK ═══ -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithCredential, signOut, onAuthStateChanged }
   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, onSnapshot }
   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -833,9 +833,22 @@ window.sair = async () => {
 
 window.loginGoogle = async () => {
   try {
+    const isNative = !!window.Capacitor?.isNativePlatform?.();
+    if(isNative){
+      const nativeAuth = window.Capacitor?.Plugins?.FirebaseAuthentication;
+      if(!nativeAuth) throw new Error('Firebase Authentication nativo não está disponível.');
+      const result = await nativeAuth.signInWithGoogle({ skipNativeAuth:true });
+      const idToken = result?.credential?.idToken;
+      const accessToken = result?.credential?.accessToken || undefined;
+      if(!idToken) throw new Error('O Google não retornou um ID token.');
+      const credential = GoogleAuthProvider.credential(idToken, accessToken);
+      await signInWithCredential(auth, credential);
+      return;
+    }
     await signInWithPopup(auth, provider);
   } catch(e) {
-    alert('Erro ao entrar: ' + e.message);
+    console.error('Erro no login Google:', e);
+    alert('Erro ao entrar: ' + (e?.message || e));
   }
 };
 
